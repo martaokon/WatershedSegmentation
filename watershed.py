@@ -9,7 +9,7 @@ class watershedSegmentation:
     def __init__(self, imgs):
         self.imgs = imgs
         self.imgs_final = []
-        self.kernel = np.ones((3,3),np.uint8)
+        self.kernel = np.ones((5,5),np.uint8)
         return 
 
     # MARKER-CONTROLLED WATERSHED SEGMENTATION ALGORITHM
@@ -19,17 +19,15 @@ class watershedSegmentation:
             gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
             ret, thresh = cv2.threshold(gray,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
 
-            # Noise removal
+            # Noise removal - opening morphological transformation gives in this case better results then closing.
             opening = cv2.morphologyEx(thresh,cv2.MORPH_OPEN, self.kernel)
-            #closing = cv2.morphologyEx(opening,cv2.MORPH_CLOSE, self.kernel)
+            # closing = cv2.morphologyEx(thresh,cv2.MORPH_CLOSE, self.kernel)
 
             # Background area determination
             background = cv2.dilate(opening, self.kernel)
 
             # Foreground area determination - with euclidean distance (DIST_L2)
-            dist_transform = cv2.distanceTransform(background, cv2.DIST_L2, cv2.DIST_MASK_PRECISE)
-
-            # Applying threshold
+            dist_transform = cv2.distanceTransform(opening, cv2.DIST_L2, cv2.DIST_MASK_PRECISE)
             ret, foreground = cv2.threshold(dist_transform,0.1*dist_transform.max(),255,0)
 
             # Finding unknown region

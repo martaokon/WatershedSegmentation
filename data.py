@@ -20,6 +20,5 @@ def showImgs(imgs):
     idx = 1
     for img in imgs:
         plt.subplot(2,2,idx),plt.imshow(img,cmap = 'gray')
-        plt.title('Watershed segmenatation'), plt.xticks([]), plt.yticks([])
         idx = idx+1
     plt.show()
