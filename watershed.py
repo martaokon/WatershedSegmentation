@@ -1,9 +1,5 @@
 import cv2
 import numpy as np
-from skimage.feature import peak_local_max
-from skimage.segmentation import watershed
-from skimage.morphology import reconstruction
-from scipy import ndimage
 
 class watershedSegmentation:
     def __init__(self, imgs):
