@@ -22,9 +22,8 @@ class watershedSegmentation:
             # Background area determination
             background = cv2.dilate(opening, self.kernel)
 
-            # Foreground area determination - with euclidean distance (DIST_L2)
-            dist_transform = cv2.distanceTransform(opening, cv2.DIST_L2, cv2.DIST_MASK_PRECISE)
-            ret, foreground = cv2.threshold(dist_transform,0.1*dist_transform.max(),255,0)
+            # Foreground area determination - with erosion, to segment only foreground area
+            foreground = cv2.morphologyEx(thresh,cv2.MORPH_ERODE, self.kernel)
 
             # Finding unknown region
             foreground = np.uint8(foreground)
