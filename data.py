@@ -10,10 +10,11 @@ def loadImgs(dir = 'berlin'):
         imgs.append(img)
     return imgs
 
-def saveImgs(imgs, dir = 'berlin'):
+def saveImgs(imgs, markers, dir = 'berlin'):
     idx = 0
     for fileName in os.listdir(dir):
         cv2.imwrite(dir + '/' + fileName.split('.')[0] + "_result.png", imgs[idx])
+        cv2.imwrite(dir + '/' + fileName.split('.')[0] + "_watershedMarkers.png", markers[idx])
         idx = idx + 1
 
 def showImgs(imgs):

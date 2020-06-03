@@ -5,8 +5,8 @@ from watershed import *
 imgs = loadImgs()
 ws = watershedSegmentation(imgs)
 # Apply watershed segmentation
-imgs_final = ws.segmentize()
+imgs_final, imgs_marker = ws.segmentize()
 # Save results
-saveImgs(imgs_final)
+saveImgs(imgs_final, imgs_marker)
 # Show results
 showImgs(imgs_final)
